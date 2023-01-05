@@ -1,6 +1,10 @@
 from typing import List, Dict, Any
+import os
+import requests
+import itertools
 
-API_URL = 'https://fake-api-vycpfa6oca-uc.a.run.app/'
+API_URL = 'https://fake-api-vycpfa6oca-uc.a.run.app/sales'
+AUTH_TOKEN = os.environ.get("AUTH_TOKEN")
 
 
 def get_sales(date: str) -> List[Dict[str, Any]]:
@@ -10,20 +14,22 @@ def get_sales(date: str) -> List[Dict[str, Any]]:
     :return: list of records
     """
     # TODO: implement me
+    full_data = [date]
+    for p in itertools.count(start=0):
+        p += 1
+        response = requests.get(
+            url=API_URL,
+            params={'date': date, 'page': p},
+            headers={'Authorization': AUTH_TOKEN},
+        )
+        if response.status_code == 200:
+            data = response.json()
+            full_data.append(data)
+        else:
+            print(response.text)
+            break
+    return full_data
 
-    # dummy return:
-    return [
-        {
-            "client": "Tara King",
-            "purchase_date": "2022-08-09",
-            "product": "Phone",
-            "price": 1062
-        },
-        {
-            "client": "Lauren Hawkins",
-            "purchase_date": "2022-08-09",
-            "product": "TV",
-            "price": 1373
-        },
-        # ...
-    ]
+
+if __name__ == '__main__':
+    get_sales('2022-08-09')
