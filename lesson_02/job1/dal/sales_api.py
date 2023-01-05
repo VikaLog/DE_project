@@ -2,7 +2,6 @@ from typing import List, Dict, Any
 import os
 import requests
 import itertools
-import json
 
 API_URL = 'https://fake-api-vycpfa6oca-uc.a.run.app/sales'
 AUTH_TOKEN = os.environ.get("AUTH_TOKEN")
