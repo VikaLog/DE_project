@@ -101,4 +101,18 @@ WHERE i.inventory_id IS NULL
 5.
 Вивести топ 3 актори, які найбільше зʼявлялись в категорії фільмів “Children”.
 */
--- SQL code goes here...
+SELECT
+	CONCAT(a.last_name, ', ', a.first_name) AS actors
+FROM
+	actor a
+	INNER JOIN film_actor fa ON a.actor_id = fa.actor_id
+    INNER JOIN film_category fc ON fc.film_id = fa.film_id
+    INNER JOIN category c ON c.category_id = fc.category_id
+    INNER JOIN film f ON f.film_id = fa.film_id
+WHERE
+    c.name = 'Children'
+GROUP BY
+    actors
+ORDER BY COUNT(f.film_id) DESC
+LIMIT 3
+;
