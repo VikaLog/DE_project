@@ -54,7 +54,24 @@ LIMIT 10
 Вивести категорія фільмів, на яку було витрачено найбільше грошей
 в прокаті
 */
--- SQL code goes here...
+SELECT
+    c.name
+    ,MAX(cam.category_amount) AS category_amount_max
+FROM
+    category c
+    INNER JOIN
+        (SELECT
+            c1.category_id
+            ,SUM(p1.amount) AS category_amount
+        FROM
+            category c1
+            INNER JOIN film_category fc1 ON c1.category_id = fc1.category_id
+            INNER JOIN inventory i1 ON fc1.film_id = i1.inventory_id
+            INNER JOIN rental r1 ON i1.inventory_id = r1.inventory_id
+            INNER JOIN payment p1 ON p1.rental_id = r1.rental_id
+        GROUP BY c1.category_id) cam ON cam.category_id = c.category_id
+GROUP BY c.name
+;
 
 
 
