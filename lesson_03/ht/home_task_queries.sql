@@ -8,8 +8,18 @@
 Вивести кількість фільмів в кожній категорії.
 Результат відсортувати за спаданням.
 */
--- SQL code goes here...
-
+SELECT
+    c.name AS category_name
+    ,COUNT(f.film_id) AS film_count
+FROM
+    category c
+    INNER JOIN film_category fc ON c.category_id = fc.category_id
+    INNER JOIN film f ON fc.film_id = f.film_id
+GROUP BY
+    c.name
+ORDER BY
+    COUNT(f.film_id) DESC
+;
 
 
 /*
@@ -17,7 +27,25 @@
 Вивести 10 акторів, чиї фільми брали на прокат найбільше.
 Результат відсортувати за спаданням.
 */
--- SQL code goes here...
+
+SELECT
+	CONCAT(a.last_name, ', ', a.first_name) AS actors
+FROM
+	actor a
+	INNER JOIN film_actor fa ON a.actor_id = fa.actor_id
+    INNER JOIN (SELECT
+                    i1.film_id
+                    ,COUNT(r1.rental_date) AS films_count
+                FROM
+                    inventory i1
+                    INNER JOIN rental r1 ON i1.inventory_id = r1.inventory_id
+                GROUP BY
+                    i1.film_id
+                ) f_top ON f_top.film_id = fa.film_id
+ORDER BY
+	f_top.films_count DESC
+LIMIT 10
+;
 
 
 
