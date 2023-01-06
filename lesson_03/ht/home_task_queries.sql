@@ -55,22 +55,31 @@ LIMIT 10
 в прокаті
 */
 SELECT
-    c.name
-    ,MAX(cam.category_amount) AS category_amount_max
+    c3.name
 FROM
-    category c
-    INNER JOIN
-        (SELECT
-            c1.category_id
-            ,SUM(p1.amount) AS category_amount
-        FROM
-            category c1
-            INNER JOIN film_category fc1 ON c1.category_id = fc1.category_id
-            INNER JOIN inventory i1 ON fc1.film_id = i1.inventory_id
-            INNER JOIN rental r1 ON i1.inventory_id = r1.inventory_id
-            INNER JOIN payment p1 ON p1.rental_id = r1.rental_id
-        GROUP BY c1.category_id) cam ON cam.category_id = c.category_id
-GROUP BY c.name
+    category c3
+    INNER JOIN film_category fc3 ON c3.category_id = fc3.category_id
+    INNER JOIN inventory i3 ON fc3.film_id = i3.inventory_id
+    INNER JOIN rental r3 ON i3.inventory_id = r3.inventory_id
+    INNER JOIN payment p3 ON p3.rental_id = r3.rental_id
+GROUP BY
+    c3.name
+HAVING SUM(p3.amount) = (SELECT
+                             MAX(cam.category_amount)
+                         FROM
+                             category c2
+                         INNER JOIN
+                                 (SELECT
+                                    1.category_id
+                                    ,SUM(p1.amount) AS category_amount
+                                 FROM
+                                    category c1
+                                    INNER JOIN film_category fc1 ON c1.category_id = fc1.category_id
+                                    INNER JOIN inventory i1 ON fc1.film_id = i1.inventory_id
+                                    INNER JOIN rental r1 ON i1.inventory_id = r1.inventory_id
+                                    INNER JOIN payment p1 ON p1.rental_id = r1.rental_id
+                                 GROUP BY
+                                    c1.category_id) cam ON cam.category_id = c2.category_id)
 ;
 
 
