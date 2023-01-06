@@ -89,7 +89,12 @@ HAVING SUM(p3.amount) = (SELECT
 Вивести назви фільмів, яких не має в inventory.
 Запит має бути без оператора IN
 */
--- SQL code goes here...
+SELECT
+    f.title
+FROM film f
+    LEFT JOIN inventory i ON f.film_id = i.film_id
+WHERE i.inventory_id IS NULL
+;
 
 
 /*
