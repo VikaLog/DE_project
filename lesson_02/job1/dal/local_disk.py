@@ -10,7 +10,7 @@ def save_to_disk(json_content: List[Dict[str, Any]], path: str) -> None:
     date = json_content[0]
     for i in range(1, len(json_content)):
         file_to_write = json_content[i]
-        with open(f"{path}/sales_{date}_{i+1}.json", "w+") as f:
+        with open(f"{path}/sales_{date}_{i}.json", "w+") as f:
             json.dump(file_to_write, f)
     return None
 
