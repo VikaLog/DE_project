@@ -150,3 +150,18 @@ env*
 *,cover
 idea/
 DS_Store
+
+
+cover/
+
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# local
+var
+.idea
+airflow
