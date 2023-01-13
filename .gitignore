@@ -148,3 +148,5 @@ env*
 # Coverage reports
 
 *,cover
+idea/
+DS_Store
