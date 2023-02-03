@@ -39,7 +39,7 @@ def main() -> flask_typing.ResponseReturnValue:
             "message": "date parameter missed",
         }, 400
 
-    save_sales_to_local_disk(date=date, raw_dir=raw_dir)
+    # save_sales_to_local_disk(date=date, raw_dir=raw_dir)
 
     return {
                "message": "Data retrieved successfully from API",
