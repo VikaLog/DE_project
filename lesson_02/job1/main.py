@@ -18,7 +18,7 @@ if not AUTH_TOKEN:
 app = Flask(__name__)
 
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET'])
 def main() -> flask_typing.ResponseReturnValue:
     """
     Controller that accepts command via HTTP and
@@ -29,18 +29,16 @@ def main() -> flask_typing.ResponseReturnValue:
       "raw_dir": "/path/to/my_dir/raw/sales/2022-08-09"
     }
     """
-    input_data: dict = request.json
+    # input_data: dict = request.json
     # TODO: implement me
-    date = input_data.get('date')
-    raw_dir = input_data.get('raw_dir')
-
-    if not date:
-        return {
-            "message": "date parameter missed",
-        }, 400
-
+    # date = input_data.get('date')
+    # raw_dir = input_data.get('raw_dir')
+    #
+    # if not date:
+    #     return {
+    #         "message": "date parameter missed",
+    #     }, 400
     # save_sales_to_local_disk(date=date, raw_dir=raw_dir)
-
     return {
                "message": "Data retrieved successfully from API",
            }, 201
