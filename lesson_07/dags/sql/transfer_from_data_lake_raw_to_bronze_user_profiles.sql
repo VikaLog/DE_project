@@ -1,5 +1,4 @@
-DELETE FROM `{{ params.project_id }}.bronze.user_profiles`
-WHERE DATE(_logical_dt) = "{{ ds }}"
+TRUNCATE TABLE `{{ params.project_id }}.bronze.user_profiles`
 ;
 
 INSERT `{{ params.project_id }}.bronze.user_profiles` (
