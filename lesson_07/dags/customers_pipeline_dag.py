@@ -51,21 +51,20 @@ transfer_from_data_lake_to_raw = BigQueryInsertJobOperator(
     }
 )
 
-# transfer_from_dwh_bronze_to_dwh_silver = BigQueryInsertJobOperator(
-#     task_id='transfer_from_dwh_bronze_to_dwh_silver',
-#     dag=dag,
-#     location='us-east1',
-#     project_id='de-07-logvinova-viktoriia',
-#     configuration={
-#         "query": {
-#             "query": "{% include 'sql/transfer_from_dwh_bronze_to_dwh_silver.sql' %}",
-#             "useLegacySql": False,
-#         }
-#     },
-#     params={
-#         'project_id': "de-07-logvinova-viktoriia"
-#     }
-# )
+transfer_from_dwh_bronze_to_dwh_silver = BigQueryInsertJobOperator(
+    task_id='transfer_from_dwh_bronze_to_dwh_silver',
+    dag=dag,
+    location='us-east1',
+    project_id='de-07-logvinova-viktoriia',
+    configuration={
+        "query": {
+            "query": "{% include 'sql/transfer_from_dwh_bronze_to_dwh_silver_customers.sql' %}",
+            "useLegacySql": False,
+        }
+    },
+    params={
+        'project_id': "de-07-logvinova-viktoriia"
+    }
+)
 
-transfer_from_data_lake_to_raw
-# >> transfer_from_dwh_bronze_to_dwh_silver
+transfer_from_data_lake_to_raw >> transfer_from_dwh_bronze_to_dwh_silver
